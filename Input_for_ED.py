@@ -4,9 +4,10 @@ import matplotlib.pyplot as pylab
 import sys
 from ED_necessary_functions import produce_states, fix_bonds, swap_bits, CdagC, is_hermitian
 from bonds_n_coords import lat_bonds
+from bonds_n_coords_diagonal import diagonal_lat_bonds
 
-if len(sys.argv) < 6:
-    print('Provide inputs: Nx Ny Nup Ndn string U')
+if len(sys.argv) < 7:
+    print('Provide inputs: Nx Ny Nup Ndn string geometery string U')
     sys.exit(1)
 
 Nx = int(sys.argv[1])
@@ -14,11 +15,16 @@ Ny = int(sys.argv[2])
 Nsite = int(Nx*Ny)
 Nup = int(sys.argv[3])
 Ndn = int(sys.argv[4])
-U = sys.argv[5]
+geometery = sys.argv[5]
+U = sys.argv[6]
 Np = Nup + Ndn
 t=1
 
-bonds, open_bonds = lat_bonds(Nx,Ny)
+if geometery == 'diagonal':
+    bonds, open_bonds = diagonal_lat_bonds(Nx,Ny)
+else:    
+    bonds, open_bonds = lat_bonds(Nx,Ny)
+
 print(bonds)
 bonds = fix_bonds(bonds)
 
